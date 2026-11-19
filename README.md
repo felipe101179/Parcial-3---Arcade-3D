@@ -3,7 +3,7 @@
 Juego arcade 3D hecho con **HTML, CSS, JavaScript y Three.js** para el Tercer Parcial de **Computación Gráfica**
 (Ingeniería Multimedia — Universidad de San Buenaventura).
 
-🎮 **Jugar en GitHub Pages:** _PEGAR AQUÍ EL ENLACE DE GITHUB PAGES_
+🎮 **Jugar en GitHub Pages:(https://felipe101179.github.io/Parcial-3---Arcade-3D/)
 
 🎬 **Video de gameplay (victoria y derrota):** _PEGAR AQUÍ EL ENLACE DEL VIDEO_
 
