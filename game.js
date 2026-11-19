@@ -12,7 +12,7 @@
      6.  Variables del juego
      7.  Construcción del nivel
      8.  Colisiones por grilla
-     9.  Sonidos (Web Audio API)
+     9.  Sonidos (archivos de assets/sonidos)
      10. Partículas
      11. Entrada del teclado
      12. Jugador
@@ -32,8 +32,12 @@
 /* =====================================================================
    0. ASSETS (de dónde sale cada cosa)
 
-   Este juego NO usa modelos 3D descargados (.obj, .glb, .fbx),
-   ni imágenes, ni archivos de sonido. Todo se crea con código.
+   Los modelos 3D y las texturas se crean con código.
+   Los sonidos y el ícono son archivos de la carpeta assets/.
+
+   CARPETA assets/
+     assets/icono.png        -> ícono de la pestaña (creación propia)
+     assets/sonidos/*.ogg    -> efectos de sonido descargados (CC0)
 
    PERSONAJES Y MODELOS 3D  -> creación propia, sección 5
      Se arman juntando figuras básicas de Three.js (primitivas)
@@ -56,9 +60,21 @@
      Se dibujan con <canvas> (crearTexturaHielo y crearTexturaPiso)
      y se convierten en textura con THREE.CanvasTexture.
 
-   SONIDOS  -> creación propia, sección 9
-     Se generan con la Web Audio API del navegador (osciladores),
-     sin archivos .mp3 ni .wav.
+   SONIDOS  -> descargados de Kenney (www.kenney.nl), sección 9
+     Licencia Creative Commons CC0 (dominio público).
+     La licencia de cada paquete está en assets/sonidos/LICENCIA-*.txt
+     - Paquete "Interface Sounds":
+         drop_002.ogg         -> poner-bomba.ogg
+         confirmation_001.ogg -> premio.ogg
+         pluck_001.ogg        -> fruta.ogg
+         error_006.ogg        -> perder-vida.ogg
+         glass_002.ogg        -> enemigo-eliminado.ogg
+         confirmation_002.ogg -> victoria.ogg
+     - Paquete "Sci-fi Sounds":
+         explosionCrunch_000.ogg -> explosion.ogg
+
+   ÍCONO DE LA PESTAÑA  -> creación propia
+     assets/icono.png (dibujo de un helado hecho por nosotros).
 
    LIBRERÍAS Y RECURSOS EXTERNOS
      - Three.js v0.186.1 (licencia MIT) - https://threejs.org
@@ -561,38 +577,32 @@ function hayFuego(x, z) {
 }
 
 /* =====================================================================
-   9. SONIDOS (Web Audio API, sin archivos)
+   9. SONIDOS (archivos .ogg de la carpeta assets/sonidos)
+   Son sonidos libres (CC0) de Kenney: ver la sección 0. ASSETS
    ===================================================================== */
-let audio = null;
 
-function iniciarAudio() {
-    if (!audio) audio = new (window.AudioContext || window.webkitAudioContext)();
-}
-
-// Hace un pitido simple: frecuencia inicial, final, duración y tipo de onda
-function pitido(frecInicio, frecFin, duracion, tipo = 'square', volumen = 0.15) {
-    if (!audio) return;
-    const osc = audio.createOscillator();
-    const vol = audio.createGain();
-    osc.type = tipo;
-    osc.frequency.setValueAtTime(frecInicio, audio.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(frecFin, audio.currentTime + duracion);
-    vol.gain.setValueAtTime(volumen, audio.currentTime);
-    vol.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + duracion);
-    osc.connect(vol);
-    vol.connect(audio.destination);
-    osc.start();
-    osc.stop(audio.currentTime + duracion);
+// Carga un archivo de sonido y devuelve una función que lo reproduce
+function cargarSonido(archivo, volumen = 0.6) {
+    const audio = new Audio('./assets/sonidos/' + archivo);
+    audio.volume = volumen;
+    return () => {
+        // cloneNode() hace una copia: así el mismo sonido puede sonar
+        // varias veces a la vez (por ejemplo, dos bombas seguidas)
+        const copia = audio.cloneNode();
+        copia.volume = volumen;
+        // el navegador puede bloquear el sonido; si pasa, no rompemos el juego
+        copia.play().catch(() => {});
+    };
 }
 
 const sonidos = {
-    ponerBomba: () => pitido(300, 150, 0.1),
-    explosion: () => pitido(120, 30, 0.5, 'sawtooth', 0.3),
-    premio: () => pitido(500, 1200, 0.2, 'triangle'),
-    fruta: () => { pitido(700, 1400, 0.12, 'triangle'); setTimeout(() => pitido(900, 1800, 0.12, 'triangle'), 100); },
-    perderVida: () => pitido(400, 60, 0.6, 'square', 0.2),
-    enemigoMuerto: () => pitido(800, 200, 0.25, 'triangle'),
-    victoria: () => { pitido(400, 800, 0.3, 'triangle'); setTimeout(() => pitido(600, 1200, 0.4, 'triangle'), 300); },
+    ponerBomba: cargarSonido('poner-bomba.ogg'),
+    explosion: cargarSonido('explosion.ogg', 0.8),
+    premio: cargarSonido('premio.ogg'),
+    fruta: cargarSonido('fruta.ogg'),
+    perderVida: cargarSonido('perder-vida.ogg'),
+    enemigoMuerto: cargarSonido('enemigo-eliminado.ogg'),
+    victoria: cargarSonido('victoria.ogg'),
 };
 
 /* =====================================================================
@@ -999,7 +1009,6 @@ function cambiarEstado(nuevo) {
 }
 
 function iniciarJuego() {
-    iniciarAudio();
     vidas = CONFIG.VIDAS;
     puntaje = 0;
     construirNivel();

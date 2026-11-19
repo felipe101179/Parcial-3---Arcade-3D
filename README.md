@@ -75,29 +75,41 @@ El nivel está escrito como texto en `game.js` (sección 2, constante `MAPA`) y 
 - Máquina de estados: `inicio`, `jugando`, `pausa`, `gameover` y `victoria`.
 - Objeto `CONFIG` con todas las constantes ajustables (velocidades, tiempos, vidas, puntos).
 - Modelos hechos con primitivas dentro de `THREE.Group`, luces con sombras y texturas generadas con `<canvas>`.
-- Sistema de partículas y 7 efectos de sonido creados con la Web Audio API.
+- Sistema de partículas y 7 efectos de sonido en archivos `.ogg` (carpeta `assets/sonidos`).
+
+## 📁 Estructura del proyecto
+
+```
+├── index.html
+├── style.css
+├── game.js
+├── assets/
+│   ├── icono.png
+│   └── sonidos/   (7 sonidos .ogg + licencias)
+└── README.md
+```
 
 ## 📦 Créditos y recursos externos
 
-Todos los personajes, modelos 3D, texturas y sonidos son **creación propia** y están hechos con código
-(ver la sección **0. ASSETS** al inicio de `game.js`). No se usaron modelos, imágenes ni sonidos descargados.
+Los personajes, los modelos 3D y las texturas son **creación propia** y están hechos con código
+(ver la sección **0. ASSETS** al inicio de `game.js`). El ícono `assets/icono.png` también es creación propia.
 
 | Recurso | Uso | Licencia |
 |---|---|---|
 | [Three.js](https://threejs.org) v0.186.1 (desde el CDN jsDelivr) | Librería 3D | MIT |
 | [Poppins](https://fonts.google.com/specimen/Poppins) (Google Fonts) | Fuente de la interfaz | SIL Open Font License |
+| [Interface Sounds](https://kenney.nl/assets/interface-sounds) de Kenney | Sonidos: poner bomba, premio, fruta, perder vida, enemigo eliminado y victoria | CC0 |
+| [Sci-fi Sounds](https://kenney.nl/assets/sci-fi-sounds) de Kenney | Sonido de la explosión | CC0 |
+
+| Archivo en `assets/sonidos` | Archivo original (Kenney) |
+|---|---|
+| `poner-bomba.ogg` | `drop_002.ogg` |
+| `premio.ogg` | `confirmation_001.ogg` |
+| `fruta.ogg` | `pluck_001.ogg` |
+| `perder-vida.ogg` | `error_006.ogg` |
+| `enemigo-eliminado.ogg` | `glass_002.ogg` |
+| `victoria.ogg` | `confirmation_002.ogg` |
+| `explosion.ogg` | `explosionCrunch_000.ogg` |
 
 - La temática (helado, bloques de hielo y frutas) está inspirada en el juego *Bad Ice-Cream*, pero no se copió ningún
   personaje, imagen ni sonido de ese juego. La mecánica de bombas es la clásica de *Bomberman*.
-
-## 🤖 Declaración de uso de IA
-
-_REVISAR Y AJUSTAR ESTA PARTE PARA QUE DIGA EXACTAMENTE CÓMO LA USARON._
-
-Usamos **Claude (Anthropic)** como apoyo para:
-
-- Explicar errores y dudas sobre la API de Three.js.
-- Revisar el código y comprobar que cumpliera los requisitos del parcial.
-- Redactar la sección de assets en `game.js` y este README.
-
-Todo el código entregado fue revisado por nosotros y lo podemos explicar en la sustentación.
