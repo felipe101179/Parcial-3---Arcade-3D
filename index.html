@@ -1,0 +1,87 @@
+<!-- Author: Felipe Florez
+    Date of creation: 12/11/2026
+    Last modified: 19/11/2026
+
+    HTML+CSS+JS
+
+    Index -> HUD, Menú y pantallas
+    Style -> Apariencia
+    Game.js -> Lógica del juego: escena, tilemap, bombas, explosiones, llamitas, frutas, vidas, etc.
+    -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helado Explosivo</title>
+    <!-- Ícono vacío: evita el error "404 favicon.ico" en la consola -->
+    <link rel="icon" href="data:,">
+    <!-- Fuente Poppins desde Google Fonts (style.css la usa) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Hoja de estilos CSS -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Import map: de dónde sale Three.js (versión fija) -->
+    <script type="importmap">
+    {
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js"
+    }
+    }
+    </script>
+
+</head>
+
+<body>
+
+    <!-- HUD (HEADS-UP DISPLAY) -->
+    <div id="hud">
+        <div class="hud-item">VIDAS <span id="hud-vidas">3</span></div>
+        <div class="hud-item">PUNTOS <span id="hud-puntos">0</span></div>
+        <div class="hud-item">FRUTAS <span id="hud-frutas">0 / 3</span></div>
+        <div class="hud-item">BOMBAS <span id="hud-bombas">1</span></div>
+        <div class="hud-item">ALCANCE <span id="hud-alcance">2</span></div>
+    </div>
+
+    <!-- Pantalla de inicio -->
+    <div id="pantalla-inicio" class="pantalla">
+        <h1><b>Computer Graphics</b><br> <span class="acento">Helado Explosivo</span></h1>
+
+        <p class="pista">
+            Eres un helado atrapado en un laberinto de hielo. <br>
+            Pon bombas para romper los bloques de hielo y eliminar a las llamitas. <br>
+            Cada llamita suelta una fruta: recógelas todas para abrir la puerta escondida bajo el hielo. <br>
+            ¡Cuidado! Si te toca una llamita o tu propia explosión, te derrites. <br>
+        </p>
+
+        <p class="subtitulo">
+            <b>Flechas / WASD</b>: moverse &nbsp;|&nbsp; <b>Espacio</b>: poner bomba &nbsp;|&nbsp; <b>P</b>: pausa
+        </p>
+
+        <button id="btn-jugar">Jugar</button>
+    </div>
+
+    <!-- Pantalla de Pausa -->
+    <div id="pantalla-pausa" class="pantalla oculto">
+        <h1>PAUSA</h1>
+        <p class="subtitulo">Presiona P para continuar</p>
+    </div>
+
+    <!-- Pantalla Final -->
+    <div id="pantalla-fin" class="pantalla oculto">
+        <!-- game.js cambia este título por "GAME OVER" o "¡NIVEL COMPLETADO!" -->
+        <h1 id="fin-titulo">FIN DEL JUEGO</h1>
+        <!-- Aquí game.js escribe los puntos obtenidos -->
+        <p id="fin-detalle" class="subtitulo"></p>
+        <button id="btn-reiniciar">JUGAR DE NUEVO</button>
+    </div>
+
+    <script type="module" src="./game.js"></script>
+</body>
+
+</html>
