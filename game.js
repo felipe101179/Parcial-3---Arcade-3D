@@ -29,66 +29,13 @@
      - Eje Y -> Arriba (solo visual: el juego se mueve en X y Z)
    ===================================================================== */
 
-/* =====================================================================
-   0. ASSETS (de dónde sale cada cosa)
-
-   Los modelos 3D y las texturas se crean con código.
-   Los sonidos y el ícono son archivos de la carpeta assets/.
-
-   CARPETA assets/
-     assets/icono.png        -> ícono de la pestaña (creación propia)
-     assets/sonidos/*.ogg    -> efectos de sonido descargados (CC0)
-
-   PERSONAJES Y MODELOS 3D  -> creación propia, sección 5
-     Se arman juntando figuras básicas de Three.js (primitivas)
-     dentro de un THREE.Group:
-     - Helado (jugador): ConeGeometry (cono) + 2 SphereGeometry (bolas)
-                         + esfera pequeña (cereza) + 2 esferas (ojos)
-     - Llamita (enemigo): SphereGeometry (cuerpo) + ConeGeometry (punta)
-                          + esferas para ojos y pupilas
-     - Bomba: SphereGeometry + CylinderGeometry (mecha) + esfera (chispa)
-     - Frutas: fresa (cono + cilindro), banano (CapsuleGeometry),
-               uvas (4 esferas)
-     - Puerta: BoxGeometry (marco, hoja y tapete)
-     - Premios: OctahedronGeometry (rombo que gira)
-     - Bloques de hielo, muros y piso: BoxGeometry y PlaneGeometry
-     Idea de la temática: inspirada en el juego "Bad Ice-Cream"
-     (helado, bloques de hielo y frutas). No se copió ningún modelo
-     ni imagen de ese juego.
-
-   TEXTURAS  -> creación propia, sección 4
-     Se dibujan con <canvas> (crearTexturaHielo y crearTexturaPiso)
-     y se convierten en textura con THREE.CanvasTexture.
-
-   SONIDOS  -> descargados de Kenney (www.kenney.nl), sección 9
-     Licencia Creative Commons CC0 (dominio público).
-     La licencia de cada paquete está en assets/sonidos/LICENCIA-*.txt
-     - Paquete "Interface Sounds":
-         drop_002.ogg         -> poner-bomba.ogg
-         confirmation_001.ogg -> premio.ogg
-         pluck_001.ogg        -> fruta.ogg
-         error_006.ogg        -> perder-vida.ogg
-         glass_002.ogg        -> enemigo-eliminado.ogg
-         confirmation_002.ogg -> victoria.ogg
-     - Paquete "Sci-fi Sounds":
-         explosionCrunch_000.ogg -> explosion.ogg
-
-   ÍCONO DE LA PESTAÑA  -> creación propia
-     assets/icono.png (dibujo de un helado hecho por nosotros).
-
-   LIBRERÍAS Y RECURSOS EXTERNOS
-     - Three.js v0.186.1 (licencia MIT) - https://threejs.org
-       Se carga desde el CDN jsDelivr (ver import map en index.html).
-     - Fuente "Poppins" (licencia SIL Open Font License)
-       Se carga desde Google Fonts (ver index.html).
-   ===================================================================== */
 import * as THREE from 'three';
 
 /* =====================================================================
    1. CONFIGURACIÓN (todas las constantes que se pueden ajustar)
    ===================================================================== */
 const CONFIG = {
-    TAM_CASILLA: 2,          // tamaño de cada casilla en el mundo 3D
+    TAM_CASILLA: 2,         
     TIEMPO_PASO_JUGADOR: 0.18, // segundos que tarda el jugador en pasar de una casilla a otra
     TIEMPO_PASO_ENEMIGO: 0.45, // los enemigos son más lentos
     TIEMPO_BOMBA: 2.5,       // segundos antes de que la bomba explote
